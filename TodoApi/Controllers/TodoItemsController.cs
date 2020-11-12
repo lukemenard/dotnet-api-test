@@ -60,6 +60,7 @@ namespace TodoApi.Controllers
 
             todoItem.Name = todoItemDTO.Name;
             todoItem.IsComplete = todoItemDTO.IsComplete;
+            todoItem.Description = todoItemDTO.Description;
 
             try
             {
@@ -79,7 +80,8 @@ namespace TodoApi.Controllers
             var todoItem = new TodoItem
             {
                 IsComplete = todoItemDTO.IsComplete,
-                Name = todoItemDTO.Name
+                Name = todoItemDTO.Name,
+                Description = todoItemDTO.Description
             };
 
             _context.TodoItems.Add(todoItem);
@@ -115,7 +117,8 @@ namespace TodoApi.Controllers
             {
                 Id = todoItem.Id,
                 Name = todoItem.Name,
-                IsComplete = todoItem.IsComplete
+                IsComplete = todoItem.IsComplete,
+                Description = todoItem.Description
             };
     }
 }

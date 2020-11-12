@@ -9,28 +9,22 @@ function getItems() {
         headers: {
             "Origin": "https://localhost:3000",
             "Access-Control-Allow-Origin": "*"
-            //"Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
-            //"Access-Control-Allow-Headers": "Origin, Content-Type, Accept"
         }
     })
         .then(response => response.json())
-        //.then(response => console.log(response))
         .then(res => _displayItems(res))
-
         .catch(error => console.error('Unable to get items.', error))
 }
 
-//function getItems() {
-//    fetch(uri)
-//    .then(response => console.log(response))
-//}
 
 function addItem() {
     const addNameTextbox = document.getElementById('add-name');
+    const addDescTextbox = document.getElementById('add-desc');
 
     const item = {
         isComplete: false,
-        name: addNameTextbox.value.trim()
+        name: addNameTextbox.value.trim(),
+        description: addDescTextbox.value.trim()
     };
 
     fetch(uri, {
@@ -45,6 +39,7 @@ function addItem() {
         .then(() => {
             getItems();
             addNameTextbox.value = '';
+            addDescTextbox.value = '';
         })
         .catch(error => console.error('Unable to add item.', error));
 }
@@ -61,6 +56,7 @@ function displayEditForm(id) {
     const item = todos.find(item => item.id === id);
 
     document.getElementById('edit-name').value = item.name;
+    document.getElementById('edit-desc').value = item.description;
     document.getElementById('edit-id').value = item.id;
     document.getElementById('edit-isComplete').checked = item.isComplete;
     document.getElementById('editForm').style.display = 'block';
@@ -71,7 +67,8 @@ function updateItem() {
     const item = {
         id: parseInt(itemId, 10),
         isComplete: document.getElementById('edit-isComplete').checked,
-        name: document.getElementById('edit-name').value.trim()
+        name: document.getElementById('edit-name').value.trim(),
+        description: document.getElementById('edit-desc').value.trim()
     };
 
     fetch(`${uri}/${itemId}`, {
@@ -132,10 +129,14 @@ function _displayItems(data) {
         td2.appendChild(textNode);
 
         let td3 = tr.insertCell(2);
-        td3.appendChild(editButton);
+        let textNodeDesc = document.createTextNode(item.description);
+        td3.appendChild(textNodeDesc);
 
         let td4 = tr.insertCell(3);
-        td4.appendChild(deleteButton);
+        td4.appendChild(editButton);
+
+        let td5 = tr.insertCell(4);
+        td5.appendChild(deleteButton);
     });
 
     todos = data;

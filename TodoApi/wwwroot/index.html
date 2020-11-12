@@ -12,7 +12,8 @@
     <div class="add-form">
         <h3>Add a To-Do Item</h3>
         <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
-            <input type="text" id="add-name" placeholder="New to-do">
+            <input type="text" id="add-name" placeholder="New to-do name">
+            <input type="text" id="add-desc" placeholder="New to-do description">
             <input type="submit" value="Add">
         </form>
     </div>
@@ -23,7 +24,8 @@
         <form action="javascript:void(0);" onsubmit="updateItem()">
             <input type="hidden" id="edit-id">
             <input type="checkbox" id="edit-isComplete">
-            <input type="text" id="edit-name" placeholder="Edit to-do">
+            <input type="text" id="edit-name" placeholder="Edit to-do name">
+            <input type="text" id="edit-desc" placeholder="Edit to-do description">
             <input type="submit" value="Save">
             <a onclick="closeInput()" aria-label="Close">&#10006;</a>
         </form>
@@ -35,14 +37,13 @@
             <tr>
                 <th class="th-1">Is Complete?</th>
                 <th class="th-1">Name</th>
+                <th class="th-1">Description</th>
                 <th class="th-2"></th>
                 <th class="th-2"></th>
             </tr>
             <tbody id="todos"></tbody>
         </table>
     </div>
-
-
 
     <script src="js/site.js" asp-append-version="true"></script>
     <script type="text/javascript">getItems();</script>
