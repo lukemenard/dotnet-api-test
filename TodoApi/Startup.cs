@@ -23,6 +23,21 @@ namespace TodoApi
             services.AddDbContext<TodoContext>(opt =>
                                                opt.UseInMemoryDatabase(databaseName: "TodoList"));
             services.AddControllers();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                  "CorsPolicy",
+                  builder => builder.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                );
+            });
+
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+
+            services.AddRouting(r => r.SuppressCheckForUnhandledSecurityMetadata = true);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +47,16 @@ namespace TodoApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
+
+            app.Use((context, next) =>
+            {
+                context.Items["__CorsMiddlewareInvoked"] = true;
+                return next();
+            });
+
+            //app.UsePreflightRequestHandler();
 
             app.UseDefaultFiles();
 
@@ -46,6 +71,13 @@ namespace TodoApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

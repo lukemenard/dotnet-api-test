@@ -1,12 +1,29 @@
-const uri = 'api/TodoItems';
+const uri = 'https://localhost:5001/api/TodoItems';
+
 let todos = [];
 
 function getItems() {
-    fetch(uri)
+    fetch(uri, {
+        method: "GET",
+        //mode: "no-cors",
+        headers: {
+            "Origin": "https://localhost:3000",
+            "Access-Control-Allow-Origin": "*"
+            //"Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+            //"Access-Control-Allow-Headers": "Origin, Content-Type, Accept"
+        }
+    })
         .then(response => response.json())
-        .then(data => _displayItems(data))
-        .catch(error => console.error('Unable to get items.', error));
+        //.then(response => console.log(response))
+        .then(res => _displayItems(res))
+
+        .catch(error => console.error('Unable to get items.', error))
 }
+
+//function getItems() {
+//    fetch(uri)
+//    .then(response => console.log(response))
+//}
 
 function addItem() {
     const addNameTextbox = document.getElementById('add-name');
