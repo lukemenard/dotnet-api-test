@@ -1,0 +1,28 @@
+.title {
+    color: green;
+}
+
+.add-form {
+    margin-bottom: 3rem;
+}
+
+.edit-form {
+    margin-bottom: 3rem;
+}
+
+.table {
+    border-collapse: separate;
+}
+
+.table-wrapper {
+    border-left: -10px;
+}
+
+.th-1 {
+    width: 10rem;
+    text-align: left;
+}
+
+h4 {
+    margin-bottom: 1rem;
+}
